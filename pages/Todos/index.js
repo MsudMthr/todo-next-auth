@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddNewTodo from "../../components/AddNewTodo";
@@ -32,15 +33,20 @@ const Todos = ({ todos }) => {
   };
 
   return (
-    <section className="bg-gray-200/50 ">
-      <div className="max-w-screen-lg mx-auto flex flex-col items-center justify-center gap-4 min-h-screen">
-        <h1 className="font-bold text-xl">Todo</h1>
-        <div className="flex items-center justify-around w-full">
+    <section className="bg-gray-200/50 min-h-screen ">
+      <Grid
+        container
+        // spacing={2}
+        className="place-items-center max-w-screen-lg mx-auto min-h-screen "
+      >
+        <Grid item xs={12} md={4}>
           <AddNewTodo onAddTodo={onAddTodo} />
-          <div className="flex flex-col items-center gap-3 overflow-auto max-h-72 ">
-            <h1 className="sticky top-0 bg-white/50 backdrop-blur-md w-full text-center ">
-              Todos
-            </h1>
+        </Grid>
+        <Grid item xs={12} md={8} className="overflow-auto max-h-72 w-1/2 ">
+          <h1 className="sticky top-0 bg-gray-100/50 backdrop-blur-sm w-full text-center ">
+            Todos
+          </h1>
+          <div className="flex flex-col justify-center items-center">
             {data?.map((todo) => (
               <TodoCard
                 key={todo._id}
@@ -51,8 +57,8 @@ const Todos = ({ todos }) => {
               />
             ))}
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </section>
   );
 };

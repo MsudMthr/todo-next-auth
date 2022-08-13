@@ -52,13 +52,13 @@ const AddNewTodo = ({ onAddTodo }) => {
             onChange={changeHandler}
           />
           {/* add todo button  */}
-          <div className="flex flex-row-reverse gap-2  items-stretch">
+          <div className="flex  flex-row-reverse gap-2  items-stretch">
             <Button
               color="success"
               variant="contained"
               endIcon={<SendIcon />}
               onClick={sendTodoHandler}
-              className=""
+              className="flex-[5]"
             >
               Add todo
             </Button>
@@ -66,7 +66,7 @@ const AddNewTodo = ({ onAddTodo }) => {
               variant="contained"
               color="error"
               onClick={formOpenHandler}
-              className=""
+              className="flex-1"
             >
               <CloseIcon fontSize="small" />
             </Button>

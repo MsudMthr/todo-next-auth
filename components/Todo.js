@@ -18,24 +18,30 @@ const TodoCard = ({ todo, id, setData, onCompleteTodo }) => {
   };
 
   return (
-    <div className="flex gap-3 my-1 ">
+    <div className="flex gap-3 p-1 justify-between w-full ">
       <Link href={`/Todos/${id}`}>
         <a>
           <p>{todo.todo}</p>
         </a>
       </Link>
-      <DeleteIcon
-        onClick={deleteTodo}
-        className="cursor-pointer"
-        color="error"
-      />
+      <div className="flex gap-2">
+        <DeleteIcon
+          onClick={deleteTodo}
+          className="cursor-pointer"
+          color="error"
+        />
 
-      <button onClick={() => onCompleteTodo(id)}>
-        {todo.isCompleted ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
-      </button>
-      <Link href={`/Todos/edit/${id}`} passHref>
-        <EditIcon />
-      </Link>
+        <button onClick={() => onCompleteTodo(id)}>
+          {todo.isCompleted ? (
+            <CheckBoxIcon color="primary" />
+          ) : (
+            <CheckBoxOutlineBlankIcon color="primary" />
+          )}
+        </button>
+        <Link href={`/Todos/edit/${id}`} passHref>
+          <EditIcon className="cursor-pointer" color="success" />
+        </Link>
+      </div>
     </div>
   );
 };
