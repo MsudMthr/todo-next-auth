@@ -1,8 +1,13 @@
 import React from "react";
 import axios from "axios";
 import Link from "next/link";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import EditIcon from "@mui/icons-material/Edit";
 
-const TodoCard = ({ todo, id, setData }) => {
+const TodoCard = ({ todo, id, setData, onCompleteTodo }) => {
+  console.log(todo);
   const deleteTodo = () => {
     console.log(id);
     axios
@@ -16,15 +21,20 @@ const TodoCard = ({ todo, id, setData }) => {
     <div className="flex gap-3 my-1 ">
       <Link href={`/Todos/${id}`}>
         <a>
-          <p>{todo}</p>
+          <p>{todo.todo}</p>
         </a>
       </Link>
-      <button onClick={deleteTodo} className="bg-red-500 p-2 rounded">
-        delete
+      <DeleteIcon
+        onClick={deleteTodo}
+        className="cursor-pointer"
+        color="error"
+      />
+
+      <button onClick={() => onCompleteTodo(id)}>
+        {todo.isCompleted ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
       </button>
-      <button className="bg-green-500 p-2 rounded">check</button>
-      <Link href={`/Todos/edit/${id}`}>
-        <a className="bg-blue-500 p-2 rounded">update</a>
+      <Link href={`/Todos/edit/${id}`} passHref>
+        <EditIcon />
       </Link>
     </div>
   );

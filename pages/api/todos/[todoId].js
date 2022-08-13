@@ -4,6 +4,7 @@ import Todo from "../../../server/models/todo";
 dbConnect();
 
 export default async function todo(req, res) {
+  const { todoId } = req.query;
 
   //* handle DELETE method for todo
 
@@ -33,6 +34,6 @@ export default async function todo(req, res) {
 }
 
 export async function getOneTodo(query) {
-  const todo = await Todo.findById(query);
+  const todo = await Todo.findById(query.todoId);
   return todo;
 }

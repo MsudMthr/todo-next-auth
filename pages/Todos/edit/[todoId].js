@@ -1,50 +1,72 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { getOneTodo } from "../../api/todos/[todoId]";
-
+import dbConnect from "../../../server/utils/dbConnect";
 import axios from "axios";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
+
 const EditTodo = ({ todo }) => {
   const router = useRouter();
   const [formData, setFormData] = useState({
     todo: todo.todo,
     description: todo.description,
   });
-
-  console.log(router.query);
-
+  const [isCompletedTodo, setIsCompletedTodo] = useState(todo.isCompleted);
+  console.log(todo);
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const updateHandler = () => {
-    axios.put(`/api/todo/${router.query.todoId}`,{todo : formData}).then((res) => {
-      console.log(res.data);
-      router.push("/Todos");
-    });
+    axios
+      .put(`/api/todo/${router.query.todoId}`, { todo: formData })
+      .then((res) => {
+        console.log(res.data);
+        router.push("/Todos");
+      });
   };
 
   return (
-    <div className="flex flex-col gap-2 my-2 mx-3">
-      <input
-        type="text"
-        name="todo"
-        id=""
-        className="ring-2 ring-rose-500 outline-none rounded  "
-        value={formData.todo}
-        onChange={changeHandler}
-      />
-      <textarea
-        name="description"
-        id=""
-        cols="30"
-        rows="10"
-        value={formData.description}
-        onChange={changeHandler}
-      ></textarea>
-      <button onClick={updateHandler} className="bg-sky-500 p-1 rounded">
-        update todo
-      </button>
-    </div>
+    <section className="bg-gray-200/50">
+      <div className="max-w-screen-lg mx-auto flex flex-col items-center justify-center gap-4 min-h-screen">
+        {/* todo input part */}
+        <TextField
+          id="standard-basic"
+          label="Todo"
+          variant="standard"
+          name="todo"
+          value={formData.todo}
+          onChange={changeHandler}
+        />
+
+        {/* description input part */}
+        <TextField
+          id="standard-basic"
+          label="Description"
+          variant="standard"
+          name="description"
+          value={formData.description}
+          onChange={changeHandler}
+        />
+        <div className="flex items-center gap-1 justify-start">
+          <input type="checkbox" name="" id="completed" />
+          <label htmlFor="completed">complete</label>
+        </div>
+        {/* add todo button  */}
+        <Button
+          color="success"
+          variant="contained"
+          endIcon={<SendIcon />}
+          onClick={updateHandler}
+          className=""
+        >
+          Update todo
+        </Button>
+      </div>
+    </section>
   );
 };
 
@@ -52,7 +74,8 @@ export default EditTodo;
 
 export const getServerSideProps = async (context) => {
   const { query } = context;
-  const todo = await getOneTodo(query.todoId);
+  dbConnect();
+  const todo = await getOneTodo(query);
   return {
     props: {
       todo: JSON.parse(JSON.stringify(todo)),

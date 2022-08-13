@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     const todos = await Todo.find({});
 
-    return res.status(201).json({ 
+    return res.status(201).json({
       message: "todo is created",
       todos,
     });
