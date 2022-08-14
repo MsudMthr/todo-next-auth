@@ -29,7 +29,8 @@ export default async function todo(req, res) {
     todo.todo = body.todo.todo;
     todo.description = body.todo.description;
     await todo.save();
-    return res.status(200).json({ message: "todo edited" });
+    const todos = await Todo.find({});
+    return res.status(200).json({ message: "todo edited", todos });
   }
 }
 

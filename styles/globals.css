@@ -17,3 +17,46 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.scrollTodo::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scrollTodo::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(63, 54, 54);
+  border-radius: 3px;
+}
+
+/* Handle */
+.scrollTodo::-webkit-scrollbar-thumb {
+  background: rgb(168, 39, 201);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.scrollTodo::-webkit-scrollbar-thumb:hover {
+  background: #5a1d6d;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+  transition: all 1s;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(63, 54, 54);
+  border-radius: 1px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(39, 201, 93);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #063a0d;
+}

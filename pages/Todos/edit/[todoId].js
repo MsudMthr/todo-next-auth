@@ -15,17 +15,28 @@ const EditTodo = ({ todo }) => {
     description: todo.description,
   });
   const [isCompletedTodo, setIsCompletedTodo] = useState(todo.isCompleted);
-  console.log(todo);
   const changeHandler = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  console.log(todo);
   const updateHandler = () => {
     axios
-      .put(`/api/todo/${router.query.todoId}`, { todo: formData })
+      .put(`/api/todos/${router.query.todoId}`, { todo: formData })
       .then((res) => {
         console.log(res.data);
         router.push("/Todos");
+      });
+  };
+
+  const completeHandler = (id) => {
+    console.log(id);
+    axios
+      .put(`/api/todos/complete/${id}`)
+      .then(({ data }) => {
+        setIsCompletedTodo(!isCompletedTodo);
+      })
+      .then((err) => {
+        console.log(err);
       });
   };
 
@@ -51,20 +62,37 @@ const EditTodo = ({ todo }) => {
           value={formData.description}
           onChange={changeHandler}
         />
+        {/* complete checkbox Todo */}
         <div className="flex items-center gap-1 justify-start">
-          <input type="checkbox" name="" id="completed" />
+          <input
+            type="checkbox"
+            name=""
+            id="completed"
+            checked={isCompletedTodo}
+            onChange={() => completeHandler(todo._id)}
+          />
           <label htmlFor="completed">complete</label>
         </div>
         {/* add todo button  */}
-        <Button
-          color="success"
-          variant="contained"
-          endIcon={<SendIcon />}
-          onClick={updateHandler}
-          className=""
-        >
-          Update todo
-        </Button>
+        <div className="flex gap-1 ">
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => router.push("/Todos")}
+            className="flex-1"
+          >
+            <CloseIcon fontSize="small" />
+          </Button>
+          <Button
+            color="success"
+            variant="contained"
+            endIcon={<SendIcon />}
+            onClick={updateHandler}
+            className="flex-[5]"
+          >
+            Update todo
+          </Button>
+        </div>
       </div>
     </section>
   );
